@@ -44,6 +44,7 @@ $(document).ready(function() {
                 $(this).text("Start recording");
             //}
         }
+        else sendGetRequest(dataDest);
     });
 });
 
