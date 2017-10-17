@@ -1,9 +1,9 @@
 var controllingMin = 1;
 $(document).ready(function() {
     // Check if camera feed is available.
-    $.get("http://naturewatch-cam.local:9090/feed.mjpg")
+    $.get("python/feed.mjpg")
         .done(function() {
-            $("#feed").append('<img src="http://naturewatch-cam.local:9090/feed.mjpg">');
+            $("#feed").append('<img src="python/feed.mjpg">');
         }).fail(function() {
             $("#feed").append('<img src="assets/unavailable.jpg">');
         });
@@ -49,7 +49,7 @@ $(document).ready(function() {
 });
 
 function sendGetRequest(r) {
-    $.get("http://naturewatch-cam.local:9090/")
+    $.get("python/" + r)
         .done(function() {
             console.log("Sent get request to " + r);
             return 1;
