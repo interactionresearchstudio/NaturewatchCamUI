@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Naturewatch Cam</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6" id="feed">
+            </div>
+            <div class="col-md-6" id="controls">
+                <button type="button" class="btn btn-success" data-dest="start">Start recording</button>
+                <button type="button" class="btn btn-primary" data-dest="min">Change minimum</button>
+                <div class="btn-group" id="min-controls">
+                    <button type="button" class="btn btn-secondary" data-dest="increase">+</button>
+                    <button type="button" class="btn btn-secondary" data-dest="decrease">-</button>
+                </div>
+                <button type="button" class="btn btn-primary" data-dest="max">Change maximum</button>
+                <div class="btn-group" id="max-controls">
+                    <button type="button" class="btn btn-secondary" data-dest="increase">+</button>
+                    <button type="button" class="btn btn-secondary" data-dest="decrease">-</button>
+                </div>
+                <button type="button" class="btn btn-secondary" data-dest="view-photos">View photos</button>
+            </div>
+        </div>
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="js/scripts.js"></script>
+</body>
+</html>
