@@ -22,32 +22,47 @@ $(document).ready(function() {
             $("#min-controls").show();
             $("#max-controls").hide();
             if(!controllingMin) {
-                if(sendGetRequest("changeActiveSquare")) controllingMin = 1;
+                $.get("python/" + r)
+                    .done(function() {
+                        controllingMin = 1;
+                    }).fail(function() {
+                        console.log("Failed to change min/max.");
+                    });
             }
         }
         else if(dataDest == "max") {
             $("#min-controls").hide();
             $("#max-controls").show();
             if(controllingMin) {
-                if(sendGetRequest("changeActiveSquare")) controllingMin = 0;
+                $.get("python/" + r)
+                    .done(function() {
+                        controllingMin = 0;
+                    }).fail(function() {
+                        console.log("Failed to change min/max.");
+                    });
             }
         }
         else if(dataDest == "start") {
-            console.log("Starting capture...");
-            if(sendGetRequest(dataDest)) {
-                $(this).data('dest', "stop");
-                $(this).addClass("btn-danger");
-                $(this).removeClass("btn-success");
-                $(this).text("Stop recording");
-            }
+            $.get("python/" + r)
+                .done(function() {
+                    $(this).data('dest', "stop");
+                    $(this).addClass("btn-danger");
+                    $(this).removeClass("btn-success");
+                    $(this).text("Stop recording");
+                }).fail(function() {
+                    console.log("Failed to start capture.");
+                });
         }
         else if(dataDest == "stop") {
-            if(sendGetRequest(dataDest)) {
-                $(this).data('dest', "start");
-                $(this).addClass("btn-success");
-                $(this).removeClass("btn-danger");
-                $(this).text("Start recording");
-            }
+            $.get("python/" + r)
+                .done(function() {
+                    $(this).data('dest', "start");
+                    $(this).addClass("btn-success");
+                    $(this).removeClass("btn-danger");
+                    $(this).text("Start recording");
+                }).fail(function() {
+                    console.log("Failed to stop capture.");
+                });
         }
         else sendGetRequest(dataDest);
     });
