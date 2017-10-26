@@ -22,18 +22,18 @@ $(document).ready(function() {
             $("#min-controls").show();
             $("#max-controls").hide();
             if(!controllingMin) {
-                if(sendGetRequest("changeActiveSquare") == 1) controllingMin = 1;
+                if(sendGetRequest("changeActiveSquare")) controllingMin = 1;
             }
         }
         else if(dataDest == "max") {
             $("#min-controls").hide();
             $("#max-controls").show();
             if(controllingMin) {
-                if(sendGetRequest("changeActiveSquare") == 1) controllingMin = 0;
+                if(sendGetRequest("changeActiveSquare")) controllingMin = 0;
             }
         }
         else if(dataDest == "start") {
-            if(sendGetRequest(dataDest) == 1) {
+            if(sendGetRequest(dataDest)) {
                 $(this).data('dest', "stop");
                 $(this).addClass("btn-danger");
                 $(this).removeClass("btn-success");
@@ -41,7 +41,7 @@ $(document).ready(function() {
             }
         }
         else if(dataDest == "stop") {
-            if(sendGetRequest(dataDest) == 1) {
+            if(sendGetRequest(dataDest)) {
                 $(this).data('dest', "start");
                 $(this).addClass("btn-success");
                 $(this).removeClass("btn-danger");
@@ -56,10 +56,10 @@ function sendGetRequest(r) {
     $.get("python/" + r)
         .done(function() {
             console.log("Sent get request to " + r);
-            return 1;
+            return true;
         }).fail(function() {
             console.log("Failed to send get request.");
-            return 0;
+            return false;
         });
 
 }
