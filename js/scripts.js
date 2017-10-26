@@ -33,6 +33,7 @@ $(document).ready(function() {
             }
         }
         else if(dataDest == "start") {
+            console.log("Starting capture...");
             if(sendGetRequest(dataDest)) {
                 $(this).data('dest', "stop");
                 $(this).addClass("btn-danger");
