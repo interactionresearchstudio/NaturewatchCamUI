@@ -17,6 +17,7 @@ $(document).ready(function() {
     // Button events
     $(".btn").click(function() {
         var dataDest = $(this).data('dest');
+        var thisButton = $(this);
         console.log(dataDest);
         if(dataDest == "min") {
             $("#min-controls").show();
@@ -52,10 +53,10 @@ $(document).ready(function() {
                 },
                 success: function() {
                     console.log("Started capture");
-                    $(this).data('dest', "stop");
-                    $(this).addClass("btn-danger");
-                    $(this).removeClass("btn-success");
-                    $(this).text("Stop recording");
+                    thisButton.data('dest', "stop");
+                    thisButton.addClass("btn-danger");
+                    thisButton.removeClass("btn-success");
+                    thisButton.text("Stop recording");
                 },
                 timeout: 1000
             });
@@ -68,10 +69,10 @@ $(document).ready(function() {
                 },
                 success: function() {
                     console.log("Stopped capture");
-                    $(this).data('dest', "start");
-                    $(this).addClass("btn-success");
-                    $(this).removeClass("btn-danger");
-                    $(this).text("Start recording");
+                    thisButton.data('dest', "start");
+                    thisButton.addClass("btn-success");
+                    thisButton.removeClass("btn-danger");
+                    thisButton.text("Start recording");
                 },
                 timeout: 1000
             });
