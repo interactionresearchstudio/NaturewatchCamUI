@@ -1,12 +1,14 @@
 var controllingMin = 1;
 $(document).ready(function() {
     // Check if camera feed is available.
+    /*
     $.get("python/feed.mjpg")
         .done(function() {
             $("#feed").append('<img src="python/feed.mjpg">');
         }).fail(function() {
             $("#feed").append('<img src="assets/unavailable.jpg">');
         });
+    */
 
     $("#min-controls").hide();
     $("#max-controls").hide();
