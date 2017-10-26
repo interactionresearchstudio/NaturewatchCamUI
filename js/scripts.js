@@ -33,7 +33,7 @@ $(document).ready(function() {
             }
         }
         else if(dataDest == "start") {
-            if(sendGetRequest(dataDest)) {
+            if(sendGetRequest(dataDest) == 1) {
                 $(this).data('dest', "stop");
                 $(this).addClass("btn-danger");
                 $(this).removeClass("btn-success");
@@ -41,7 +41,7 @@ $(document).ready(function() {
             }
         }
         else if(dataDest == "stop") {
-            if(sendGetRequest(dataDest)) {
+            if(sendGetRequest(dataDest) == 1) {
                 $(this).data('dest', "start");
                 $(this).addClass("btn-success");
                 $(this).removeClass("btn-danger");
