@@ -34,7 +34,7 @@ $(document).ready(function() {
             $("#min-controls").hide();
             $("#max-controls").show();
             if(controllingMin) {
-                $.get("python/" + r)
+                $.get("python/" + dataDest)
                     .done(function() {
                         controllingMin = 0;
                     }).fail(function() {
@@ -43,7 +43,7 @@ $(document).ready(function() {
             }
         }
         else if(dataDest == "start") {
-            $.get("python/" + r)
+            $.get("python/" + dataDest)
                 .done(function() {
                     $(this).data('dest', "stop");
                     $(this).addClass("btn-danger");
@@ -54,7 +54,7 @@ $(document).ready(function() {
                 });
         }
         else if(dataDest == "stop") {
-            $.get("python/" + r)
+            $.get("python/" + dataDest)
                 .done(function() {
                     $(this).data('dest', "start");
                     $(this).addClass("btn-success");
