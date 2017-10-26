@@ -23,26 +23,34 @@ $(document).ready(function() {
             $("#min-controls").show();
             $("#max-controls").hide();
             if(!controllingMin) {
-                $.get("python/" + dataDest)
-                    .done(function() {
-                        console.log("Changed min/max");
-                        controllingMin = 1;
-                    }).fail(function() {
+                $.ajax({
+                    url: "python/" + dataDest,
+                    error: function() {
                         console.log("Failed to change min/max.");
-                    });
+                    },
+                    success: function() {
+                        console.log("Changed min/max.");
+                        controllingMin = 1;
+                    },
+                    timeout: 1000
+                });
             }
         }
         else if(dataDest == "max") {
             $("#min-controls").hide();
             $("#max-controls").show();
             if(controllingMin) {
-                $.get("python/" + dataDest)
-                    .done(function() {
+                $.ajax({
+                    url: "python/" + dataDest,
+                    error: function() {
+                        console.log("Failed to change min/max.");
+                    },
+                    success: function() {
                         console.log("Changed min/max.");
                         controllingMin = 0;
-                    }).fail(function() {
-                        console.log("Failed to change min/max.");
-                    });
+                    },
+                    timeout: 1000
+                });
             }
         }
         else if(dataDest == "start") {
