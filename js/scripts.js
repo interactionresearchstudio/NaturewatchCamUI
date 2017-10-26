@@ -22,8 +22,9 @@ $(document).ready(function() {
             $("#min-controls").show();
             $("#max-controls").hide();
             if(!controllingMin) {
-                $.get("python/" + r)
+                $.get("python/" + dataDest)
                     .done(function() {
+                        console.log("Changed min/max");
                         controllingMin = 1;
                     }).fail(function() {
                         console.log("Failed to change min/max.");
@@ -36,6 +37,7 @@ $(document).ready(function() {
             if(controllingMin) {
                 $.get("python/" + dataDest)
                     .done(function() {
+                        console.log("Changed min/max.");
                         controllingMin = 0;
                     }).fail(function() {
                         console.log("Failed to change min/max.");
@@ -43,26 +45,36 @@ $(document).ready(function() {
             }
         }
         else if(dataDest == "start") {
-            $.get("python/" + dataDest)
-                .done(function() {
+            $.ajax({
+                url: "python/" + dataDest,
+                error: function() {
+                    console.log("Failed to start capture.");
+                },
+                success: function() {
+                    console.log("Started capture");
                     $(this).data('dest', "stop");
                     $(this).addClass("btn-danger");
                     $(this).removeClass("btn-success");
                     $(this).text("Stop recording");
-                }).fail(function() {
-                    console.log("Failed to start capture.");
-                });
+                },
+                timeout: 1000
+            });
         }
         else if(dataDest == "stop") {
-            $.get("python/" + dataDest)
-                .done(function() {
+            $.ajax({
+                url: "python/" + dataDest,
+                error: function() {
+                    console.log("Failed to start capture.");
+                },
+                success: function() {
+                    console.log("Stopped capture");
                     $(this).data('dest', "start");
                     $(this).addClass("btn-success");
                     $(this).removeClass("btn-danger");
                     $(this).text("Start recording");
-                }).fail(function() {
-                    console.log("Failed to stop capture.");
-                });
+                },
+                timeout: 1000
+            });
         }
         else sendGetRequest(dataDest);
     });
