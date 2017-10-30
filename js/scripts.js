@@ -10,50 +10,24 @@ $(document).ready(function() {
             $("#feed").append('<img src="assets/unavailable.jpg">');
         });
 
-    // Hide max / min controls
-    $("#min-controls").hide();
-    $("#max-controls").hide();
+    // Hide controls
+    $("#sensitivity-controls").hide();
     $("#delete-confirm").hide();
     $("#delete-confirm2").hide();
+
+    sendGetRequest("default");
 
     // Button events
     $(".btn").click(function() {
         var dataDest = $(this).data('dest');
         var thisButton = $(this);
         console.log(dataDest);
-        if (dataDest == "min") {
-            $("#min-controls").show();
-            $("#max-controls").hide();
-            if (!controllingMin) {
-                $.ajax({
-                    url: "python/" + dataDest,
-                    error: function() {
-                        console.log("Failed to change min/max.");
-                    },
-                    success: function() {
-                        console.log("Changed min/max.");
-                        controllingMin = 1;
-                    },
-                    timeout: 1000
-                });
-            }
+        if (dataDest == "sensitivity") {
+            $("#sensitivity-controls").slideDown(100);
         }
-        else if (dataDest == "max") {
-            $("#min-controls").hide();
-            $("#max-controls").show();
-            if (controllingMin) {
-                $.ajax({
-                    url: "python/" + dataDest,
-                    error: function() {
-                        console.log("Failed to change min/max.");
-                    },
-                    success: function() {
-                        console.log("Changed min/max.");
-                        controllingMin = 0;
-                    },
-                    timeout: 1000
-                });
-            }
+        else if (dataDest == "less") {
+            $("#sensitivity-controls .active").removeClass("active").
+            thisButton.addClass("active");
         }
         else if (dataDest == "start") {
             $.ajax({
@@ -88,17 +62,27 @@ $(document).ready(function() {
             });
         }
         else if (dataDest == "delete") {
-            $("#delete-confirm").show(100);
+            $("#delete-confirm").slideDown(100);
         }
         else if (dataDest == "delete-yes") {
-            $("#delete-confirm2").show(100);
+            $("#delete-confirm2").slideDown(100);
         }
         else if (dataDest == "delete-no") {
-            $("#delete-confirm").hide(100);
-            $("#delete-confirm2").hide(100);
+            $("#delete-confirm").slideUp(100);
+            $("#delete-confirm2").slideUp(100);
         }
         else if (dataDest == "delete-final") {
-            sendGetRequest(dataDest);
+            $.ajax({
+                url: "python/" + dataDest,
+                error: function() {
+                    console.log("Failed to delete photos.");
+                },
+                success: function() {
+                    console.log("Deleted photos.");
+                    location.reload(true);
+                },
+                timeout:1000
+            });
         }
         else sendGetRequest(dataDest);
     });
