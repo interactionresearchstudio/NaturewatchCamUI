@@ -13,16 +13,18 @@ $(document).ready(function() {
     // Hide max / min controls
     $("#min-controls").hide();
     $("#max-controls").hide();
+    $("#delete-confirm").hide();
+    $("#delete-confirm2").hide();
 
     // Button events
     $(".btn").click(function() {
         var dataDest = $(this).data('dest');
         var thisButton = $(this);
         console.log(dataDest);
-        if(dataDest == "min") {
+        if (dataDest == "min") {
             $("#min-controls").show();
             $("#max-controls").hide();
-            if(!controllingMin) {
+            if (!controllingMin) {
                 $.ajax({
                     url: "python/" + dataDest,
                     error: function() {
@@ -36,10 +38,10 @@ $(document).ready(function() {
                 });
             }
         }
-        else if(dataDest == "max") {
+        else if (dataDest == "max") {
             $("#min-controls").hide();
             $("#max-controls").show();
-            if(controllingMin) {
+            if (controllingMin) {
                 $.ajax({
                     url: "python/" + dataDest,
                     error: function() {
@@ -53,7 +55,7 @@ $(document).ready(function() {
                 });
             }
         }
-        else if(dataDest == "start") {
+        else if (dataDest == "start") {
             $.ajax({
                 url: "python/" + dataDest,
                 error: function() {
@@ -69,7 +71,7 @@ $(document).ready(function() {
                 timeout: 1000
             });
         }
-        else if(dataDest == "stop") {
+        else if (dataDest == "stop") {
             $.ajax({
                 url: "python/" + dataDest,
                 error: function() {
@@ -84,6 +86,19 @@ $(document).ready(function() {
                 },
                 timeout: 1000
             });
+        }
+        else if (dataDest == "delete") {
+            $("#delete-confirm").show(100);
+        }
+        else if (dataDest == "delete-yes") {
+            $("#delete-confirm2").show(100);
+        }
+        else if (dataDest == "delete-no") {
+            $("#delete-confirm").hide(100);
+            $("#delete-confirm2").hide(100);
+        }
+        else if (dataDest == "delete-final") {
+            sendGetRequest(dataDest);
         }
         else sendGetRequest(dataDest);
     });

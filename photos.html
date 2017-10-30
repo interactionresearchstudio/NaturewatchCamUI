@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Photos</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12"><h1>Photos</h1></div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h2>How to save a photo:</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <p>On mobile, tap and hold the photo to save it.<br>
+                On desktop, right click and choose save.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12"><button class="btn btn-danger" data-dest="delete">Delete all photos</button></div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="btn-group" id="delete-confirm">
+                    <button class="btn btn-default">Are you sure?</button>
+                    <button class="btn btn-danger" data-dest="delete-yes">Yes</button>
+                    <button class="btn btn-info" data-dest="delete-no">No</button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="btn-group" id="delete-confirm2">
+                    <button class="btn btn-default">Really sure?</button>
+                    <button class="btn btn-danger" data-dest="delete-final">Yes</button>
+                    <button class="btn btn-info" data-dest="delete-no">No</button>
+                </div>
+            </div>
+        </div>
+        <div id="photos">
+
+        </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="/js/jquery-3.2.1.min.js"></script>
+    <script src="/js/popper.min.js"></script>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/js/scripts.js"></script>
+    <script>
+    console.log("Hello");
+    var dir = "photos/";
+    var fileExtension = ".jpg";
+    $.ajax({
+        url: dir,
+        error: function() {
+            console.log("Error fetching directory.");
+        },
+        success: function(data) {
+            console.log("Successfully fetched directory.");
+            var numOfPhotos = 0;
+            var photoHTML = "";
+            $(data).find("a:contains(" + fileExtension + ")").each(function() {
+                numOfPhotos++;
+                var filename = this.href.replace(window.location.host, "").replace("http://", "");
+                if (numOfPhotos % 3 == 0) {
+                    console.log("Third photo.");
+                    photoHTML += "<div class='col-md-4'><img src='" + dir + filename + "'></div></div>";
+                }
+                else if (numOfPhotos % 3 == 1) {
+                    console.log("First photo");
+                    photoHTML += "<div class='row'><div class='col-md-4'><img src='" + dir + filename + "'></div>";
+                }
+                else {
+                    console.log("Middle photo");
+                    photoHTML += "<div class='col-md-4'><img src='" + dir + filename + "'></div>";
+                }
+            })
+            if (numOfPhotos % 3 != 0) {
+                console.log("did not finish on 3.");
+                for (var i=0; i<numOfPhotos%3-1; i++) {
+                    console.log("adding extra empty div");
+                    photoHTML += "<div class='col-md-4'></div>";
+                }
+                photoHTML += "</div>";
+            }
+            if (numOfPhotos == 0) $("#photos").append("<div class='row'><div class='col-md-12'><h2>No photos.</h2></div></div>");
+            else $("#photos").append(photoHTML);
+        }
+    });
+    </script>
+</body>
+</html>
