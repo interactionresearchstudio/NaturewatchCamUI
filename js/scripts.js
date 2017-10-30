@@ -25,9 +25,18 @@ $(document).ready(function() {
         if (dataDest == "sensitivity") {
             $("#sensitivity-controls").slideDown(100);
         }
-        else if (dataDest == "less") {
-            $("#sensitivity-controls .active").removeClass("active").
-            thisButton.addClass("active");
+        else if (dataDest == "less" || dataDest == "more" || dataDest == "default") {
+            $.ajax({
+                url: "python/" + dataDest,
+                error: function() {
+                    console.log("Failed to change sensitivity.");
+                },
+                success: function() {
+                    console.log("Changed sensitivity.");
+                    $("#sensitivity-controls .active").removeClass("active");
+                }
+            })
+            $("#sensitivity-controls .active").removeClass("active");
         }
         else if (dataDest == "start") {
             $.ajax({
