@@ -15,7 +15,7 @@ $(document).ready(function() {
     $("#delete-confirm").hide();
     $("#delete-confirm2").hide();
 
-    sendGetRequest("default");
+    getCameraStatus();
 
     // Button events
     $(".btn").click(function() {
@@ -96,6 +96,27 @@ $(document).ready(function() {
         else sendGetRequest(dataDest);
     });
 });
+
+function getCameraStatus() {
+    $.getJSON("python/get-status", function(data) {
+        console.log("Mode: " + data.mode);
+        console.log("Sensitivity: " + data.sensitivity);
+        if (data.mode == 1) {
+            $("#start-stop").data('dest', "stop");
+            $("#start-stop").addClass("btn-danger");
+            $("#start-stop").removeClass("btn-success");
+            $("#start-stop").text("Stop recording");
+        }
+        if (data.sensitivity == "less") {
+            $("#default").removeClass("active");
+            $("#less").addClass("active");
+        }
+        else if (data.sensitivity == "more") {
+            $("#default").removeClass("active");
+            $("#more").addClass("active");
+        }
+    });
+}
 
 function sendGetRequest(r) {
     $.get("python/" + r)

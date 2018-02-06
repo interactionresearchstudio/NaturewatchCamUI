@@ -14,12 +14,12 @@
                 <img src="http://naturewatch-cam.local:9090/feed.mjpg">
             </div>
             <div class="col-md-6" id="controls">
-                <button type="button" class="btn btn-success" data-dest="start">Start recording</button>
+                <button type="button" id="start-stop" class="btn btn-success" data-dest="start">Start recording</button>
                 <button type="button" class="btn btn-primary" data-dest="sensitivity">Sensitivity</button>
                 <div class="btn-group" id="sensitivity-controls">
-                    <button type="button" class="btn btn-secondary" data-dest="less">Less</button>
-                    <button type="button" class="btn btn-secondary active" data-dest="default">Default</button>
-                    <button type="button" class="btn btn-secondary" data-dest="more">More</button>
+                    <button type="button" id="less" class="btn btn-secondary" data-dest="less">Less</button>
+                    <button type="button" id="default" class="btn btn-secondary active" data-dest="default">Default</button>
+                    <button type="button" id="more" class="btn btn-secondary" data-dest="more">More</button>
                 </div>
                 <a href="photos.html" class="btn btn-secondary" role="button">View photos</a>
             </div>
