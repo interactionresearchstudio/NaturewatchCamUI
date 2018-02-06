@@ -24,6 +24,11 @@
             </div>
         </div>
         <div class="row">
+            <div class="col-md-12">
+                <button id="download-zip" class="btn btn-primary">Download all photos</button>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-md-12"><button class="btn btn-danger" data-dest="delete">Delete all photos</button></div>
         </div>
         <div class="row">
@@ -54,11 +59,14 @@
     <script src="/js/jquery-3.2.1.min.js"></script>
     <script src="/js/popper.min.js"></script>
     <script src="/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/bower_components/file-saver/FileSaver.min.js"></script>
+    <script src="/js/jszip.min.js"></script>
+    <script src="/js/jszip-utils.min.js"></script>
     <script src="/js/scripts.js"></script>
     <script>
-    console.log("Hello");
     var dir = "photos/";
     var fileExtension = ".jpg";
+    var images;
     $.ajax({
         url: dir,
         error: function() {
@@ -92,9 +100,53 @@
                 }
                 photoHTML += "</div>";
             }
-            if (numOfPhotos == 0) $("#photos").append("<div class='row'><div class='col-md-12'><h2>No photos.</h2></div></div>");
+            if (numOfPhotos == 0) {
+                $("#photos").append("<div class='row'><div class='col-md-12'><h2>No photos.</h2></div></div>");
+                $("#download-zip").hide();
+            }
             else $("#photos").append(photoHTML);
         }
+    });
+
+    var Promise = window.Promise;
+    if (!Promise) Promise = JSZip.external.Promise;
+
+    function urlToPromise(url) {
+        return new Promise(function(resolve, reject) {
+            JSZipUtils.getBinaryContent(url, function (err, data) {
+                if(err) {
+                    reject(err);
+                } else {
+                    resolve(data);
+                }
+            });
+        });
+    }
+
+    $("#download-zip").click(function() {
+        $("#download-zip").text("Preparing photos...");
+        $("#download-zip").prop("disabled", true);
+
+        var zip = new JSZip();
+
+        $("img").each(function(index) {
+            var imgURL = $(this).attr("src");
+            zip.file(imgURL.substring(imgURL.lastIndexOf('/')+1), urlToPromise(imgURL), {binary:true});
+        });
+
+        zip.generateAsync({type:"blob"}, function updateCallback(metadata) {
+            var msg = "progress : " + metadata.percent.toFixed(2) + "%";
+            if(metadata.currentFile) {
+                msg += ", current file = " + metadata.currentFile;
+            }
+            console.log(msg);
+        }).then(function callback(blob) {
+            saveAs(blob, "NaturewatchCameraPhotos.zip")
+            $("#download-zip").text("Done!");
+            setTimeout(function() {
+                $("#download-zip").prop("disabled", false).text("Download all photos");
+            }, 3000);
+        })
     });
     </script>
 </body>
