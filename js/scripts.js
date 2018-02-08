@@ -1,16 +1,6 @@
 var controllingMin = 1;
 $(document).ready(function() {
 
-    // Check if camera feed is available.
-    /*
-    $.get("python/feed.mjpg")
-        .done(function() {
-            console.log("Camera feed is available.");
-        }).fail(function() {
-            $("#feed").empty();
-            $("#feed").append('<img src="assets/unavailable.jpg">');
-        });
-    */
     // Hide controls
     $("#sensitivity-controls").hide();
     $("#delete-confirm").hide();
