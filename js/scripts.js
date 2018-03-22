@@ -7,6 +7,7 @@ $(document).ready(function() {
     $("#delete-confirm2").hide();
 
     getCameraStatus();
+    sendTime(getDateString());
 
     // Button events
     $(".btn").click(function() {
@@ -119,4 +120,39 @@ function sendGetRequest(r) {
             return false;
         });
 
+}
+
+/*
+Retrieves the current date and time and formats it so that it
+can be used with the Unix date command.
+ */
+function getDateString() {
+    var date = new Date();
+    var hours = date.getHours();
+    var hoursString = ('0' + hours).slice(-2)
+    var minutes = date.getMinutes();
+    var minutesString = ('0' + minutes).slice(-2)
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var monthString = ('0' + month).slice(-2)
+    var day = date.getDate();
+    var dayString = ('0' + day).slice(-2)
+
+    return year.toString() + monthString + dayString + " " + hoursString + ":" + minutesString;
+}
+
+function sendTime(t) {
+    var postData = JSON.stringify({"timeString": t});
+    console.log("Time: " + t);
+
+    $.ajax({
+        type: "POST",
+        url: 'python/set-time',
+        dataType: 'json',
+        contentType: 'application/json',
+        data: postData,
+        success: function() {
+            console.log("Sent time to Python server.");
+        }
+    });
 }
