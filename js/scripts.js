@@ -8,6 +8,7 @@ $(document).ready(function() {
 
     getCameraStatus();
     sendTime(getDateString());
+    poll();
 
     // Button events
     $(".btn").click(function() {
@@ -156,3 +157,16 @@ function sendTime(t) {
         }
     });
 }
+
+function poll() {
+    $.ajax({
+        url: "/python/info",
+        type: "GET",
+        success: function(data) {
+            $('#temp-info').text('SoC: ' + data.temp + 'c')
+        },
+        dataType: "json",
+        complete: setTimeout(function() {poll()}, 5000),
+        timeout: 2000
+    })
+})
